@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/preact';
+import { render, screen, waitFor } from '@testing-library/preact';
 import { Comp } from './comp';
 import { describe, it, expect, afterAll, beforeAll, afterEach } from 'vitest';
 import { SWRConfig } from 'swr';
@@ -16,7 +16,7 @@ describe('Comp', () => {
   afterAll(() => server.close())
   afterEach(() => server.resetHandlers())
   
-  it('should render', () => {
+  it('should render', async () => {
     render(
       <SWRConfig value={{
         dedupingInterval: 2000,
@@ -25,6 +25,9 @@ describe('Comp', () => {
         <Comp />
       </SWRConfig>
     );
-    expect(screen.getByText('working')).toBeTruthy();
+
+    await waitFor(() => {
+      expect(screen.getByText('working')).toBeTruthy();
+    })
   });
 });

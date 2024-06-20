@@ -7,5 +7,13 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    deps: {
+      optimizer: {
+        web: {
+          enabled: true,
+          include: ['swr', 'use-sync-external-store'],
+        },
+      },
+    },
   }
 });
